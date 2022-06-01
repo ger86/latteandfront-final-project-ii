@@ -6,12 +6,20 @@ export default function Login() {
     email: '',
     password: ''
   });
-  const [hasLoginFailed, setHasLoginFailed] = useState(false);
-  const [hasLoginSucceeded, setHasLoginSucceeded] = useState(false);
+  const [requestStatus, setRequestStatus] = useState({
+    isLoading: false,
+    hasFailed: false,
+    hasSucceeded: false
+  });
 
   async function handleSubmit(event) {
     event.preventDefault();
     try {
+      setRequestStatus({
+        isLoading: true,
+        hasFailed: false,
+        hasSucceeded: false
+      });
       const response = await fetch('https://librarify.latteandfront.es/api/login_check', {
         method: 'POST',
         headers: {
@@ -23,15 +31,24 @@ export default function Login() {
         })
       });
       if (response.ok) {
-        setHasLoginSucceeded(true);
-        setHasLoginFailed(false);
+        setRequestStatus({
+          isLoading: false,
+          hasFailed: false,
+          hasSucceeded: true
+        });
       } else {
-        setHasLoginFailed(true);
-        setHasLoginSucceeded(false);
+        setRequestStatus({
+          isLoading: false,
+          hasFailed: true,
+          hasSucceeded: false
+        });
       }
     } catch (error) {
-      setHasLoginFailed(true);
-      setHasLoginSucceeded(false);
+      setRequestStatus({
+        isLoading: false,
+        hasFailed: true,
+        hasSucceeded: false
+      });
     }
   }
 
@@ -67,15 +84,20 @@ export default function Login() {
           </div>
         </div>
         <div>
-          <button type="submit">Enviar</button>
+          <button type="submit" disabled={requestStatus.isLoading}>
+            Enviar
+          </button>
         </div>
         <div className={classes.feedback}>
-          {hasLoginFailed && (
+          {requestStatus.isLoading && (
+            <div className={`${classes.alert} ${classes.alertInfo}`}>Iniciando sesión</div>
+          )}
+          {requestStatus.hasFailed && (
             <div className={`${classes.alert} ${classes.alertError}`}>
               Las credenciales no son válidas
             </div>
           )}
-          {hasLoginSucceeded && (
+          {requestStatus.hasSucceeded && (
             <div className={`${classes.alert} ${classes.alertSuccess}`}>
               ¡Bienvenido a Latte and Books!
             </div>

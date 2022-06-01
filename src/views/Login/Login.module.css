@@ -26,6 +26,12 @@
   color: #0f5132;
 }
 
+.alertInfo {
+  background-color: #cff4fc;
+  border-color: #b6effb;
+  color: #055160;
+}
+
 .feedback {
   margin-top: 1rem;
 }
