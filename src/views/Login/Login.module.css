@@ -1,0 +1,31 @@
+.formControl {
+  margin-bottom: 2rem;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.alert {
+  padding: 1rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.alertError {
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  color: #842029;
+}
+
+.alertSuccess {
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  color: #0f5132;
+}
+
+.feedback {
+  margin-top: 1rem;
+}
