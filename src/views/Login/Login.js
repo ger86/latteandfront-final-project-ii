@@ -2,8 +2,10 @@ import {useState} from 'react';
 import classes from './Login.module.css';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
   const [hasLoginFailed, setHasLoginFailed] = useState(false);
   const [hasLoginSucceeded, setHasLoginSucceeded] = useState(false);
 
@@ -16,8 +18,8 @@ export default function Login() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: email,
-          password
+          username: form.email,
+          password: form.password
         })
       });
       if (response.ok) {
@@ -33,12 +35,11 @@ export default function Login() {
     }
   }
 
-  function handleEmailChanged(event) {
-    setEmail(event.target.value);
-  }
-
-  function handlePasswordChanged(event) {
-    setPassword(event.target.value);
+  function handleInputChanged(event) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      [event.target.name]: event.target.value
+    }));
   }
 
   return (
@@ -49,7 +50,7 @@ export default function Login() {
             <label className={classes.label}>Email</label>
           </div>
           <div>
-            <input value={email} onChange={handleEmailChanged} />
+            <input value={form.email} onChange={handleInputChanged} name="email" />
           </div>
         </div>
         <div className={classes.formControl}>
@@ -57,7 +58,12 @@ export default function Login() {
             <label className={classes.label}>Contraseña</label>
           </div>
           <div>
-            <input value={password} onChange={handlePasswordChanged} type="password" />
+            <input
+              value={form.password}
+              onChange={handleInputChanged}
+              name="password"
+              type="password"
+            />
           </div>
         </div>
         <div>
