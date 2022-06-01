@@ -1,0 +1,1 @@
+export const JWT_KEY = 'LATTE_AND_FRONT_FINAL_PROJECT_II';

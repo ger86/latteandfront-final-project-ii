@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {JWT_KEY} from 'consts/app';
 import classes from './Login.module.css';
 
 export default function Login() {
@@ -36,6 +37,8 @@ export default function Login() {
           hasFailed: false,
           hasSucceeded: true
         });
+        const json = await response.json();
+        localStorage.setItem(JWT_KEY, JSON.stringify(json.data));
       } else {
         setRequestStatus({
           isLoading: false,
