@@ -29,7 +29,7 @@ module.exports = {
     'react/jsx-uses-vars': 'error',
     'react/jsx-no-undef': 'error',
     'react/jsx-key': 'error',
-    'react/prop-types': 'warn',
+    'react/prop-types': 'off',
     'no-use-before-define': ['error', {functions: false}],
     'react/jsx-first-prop-new-line': [1, 'multiline'],
     'react-hooks/rules-of-hooks': 'error',

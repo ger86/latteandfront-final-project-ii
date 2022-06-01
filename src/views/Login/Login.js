@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {JWT_KEY} from 'consts/app';
-import classes from './Login.module.css';
+import LoginView from './LoginView';
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -63,50 +63,11 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className={classes.formControl}>
-          <div>
-            <label className={classes.label}>Email</label>
-          </div>
-          <div>
-            <input value={form.email} onChange={handleInputChanged} name="email" />
-          </div>
-        </div>
-        <div className={classes.formControl}>
-          <div>
-            <label className={classes.label}>Contraseña</label>
-          </div>
-          <div>
-            <input
-              value={form.password}
-              onChange={handleInputChanged}
-              name="password"
-              type="password"
-            />
-          </div>
-        </div>
-        <div>
-          <button type="submit" disabled={requestStatus.isLoading}>
-            Enviar
-          </button>
-        </div>
-        <div className={classes.feedback}>
-          {requestStatus.isLoading && (
-            <div className={`${classes.alert} ${classes.alertInfo}`}>Iniciando sesión</div>
-          )}
-          {requestStatus.hasFailed && (
-            <div className={`${classes.alert} ${classes.alertError}`}>
-              Las credenciales no son válidas
-            </div>
-          )}
-          {requestStatus.hasSucceeded && (
-            <div className={`${classes.alert} ${classes.alertSuccess}`}>
-              ¡Bienvenido a Latte and Books!
-            </div>
-          )}
-        </div>
-      </form>
-    </div>
+    <LoginView
+      form={form}
+      onInputChanged={handleInputChanged}
+      onSubmit={handleSubmit}
+      requestStatus={requestStatus}
+    />
   );
 }
