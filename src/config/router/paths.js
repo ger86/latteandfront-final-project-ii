@@ -1,0 +1,11 @@
+export const LOGIN = '/';
+export const LOGOUT = '/user/logout';
+export const BOOKS = '/user/books';
+export const BOOK_ADD = '/user/add-book';
+export const BOOK_DETAIL = '/user/books/:id';
+export const BOOK_DELETE = '/user/books/:id/delete';
+export const BOOK_EDIT = '/user/books/:id/update';
+export const CATEGORIES = '/user/categories';
+export const CATEGORY_DETAIL = '/user/categories/:id';
+export const CATEGORY_DELETE = '/user/categories/:id/delete';
+export const CATEGORY_EDIT = '/user/categories/:id/update';
