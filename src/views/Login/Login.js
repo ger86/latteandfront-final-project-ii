@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {JWT_KEY} from 'consts/app';
+import {useAuthContext} from 'contexts/authContext';
 import apiClient from 'utils/apiClient';
 import LoginView from './LoginView';
 
@@ -13,6 +13,7 @@ export default function Login() {
     hasFailed: false,
     hasSucceeded: false
   });
+  const {login} = useAuthContext();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -26,7 +27,7 @@ export default function Login() {
         username: form.email,
         password: form.password
       });
-      localStorage.setItem(JWT_KEY, JSON.stringify(json.data));
+      login(json.data);
       setRequestStatus({
         isLoading: false,
         hasFailed: false,
