@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {JWT_KEY} from 'consts/app';
+import apiClient from 'utils/apiClient';
 import LoginView from './LoginView';
 
 export default function Login() {
@@ -21,31 +22,16 @@ export default function Login() {
         hasFailed: false,
         hasSucceeded: false
       });
-      const response = await fetch('https://librarify.latteandfront.es/api/login_check', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: form.email,
-          password: form.password
-        })
+      const json = await apiClient.post('/login_check', {
+        username: form.email,
+        password: form.password
       });
-      if (response.ok) {
-        setRequestStatus({
-          isLoading: false,
-          hasFailed: false,
-          hasSucceeded: true
-        });
-        const json = await response.json();
-        localStorage.setItem(JWT_KEY, JSON.stringify(json.data));
-      } else {
-        setRequestStatus({
-          isLoading: false,
-          hasFailed: true,
-          hasSucceeded: false
-        });
-      }
+      localStorage.setItem(JWT_KEY, JSON.stringify(json.data));
+      setRequestStatus({
+        isLoading: false,
+        hasFailed: false,
+        hasSucceeded: true
+      });
     } catch (error) {
       setRequestStatus({
         isLoading: false,
