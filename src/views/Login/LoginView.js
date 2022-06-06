@@ -1,52 +1,40 @@
-import classes from './Login.module.css';
+import Box from 'components/ui/Box';
+import {PrimaryButton} from 'components/ui/Button';
+import FlexContainer from 'components/ui/FlexContainer';
+import Error from 'components/ui/form/Error';
+import FormField from 'components/ui/form/FormField';
+import {Form} from './styledComponents';
 
 export default function LoginView({form, onInputChanged, onSubmit, requestStatus}) {
   return (
-    <div>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={onSubmit}>
-        <div className={classes.formControl}>
-          <div>
-            <label className={classes.label}>Email</label>
-          </div>
-          <div>
-            <input value={form.email} onChange={onInputChanged} name="email" />
-          </div>
-        </div>
-        <div className={classes.formControl}>
-          <div>
-            <label className={classes.label}>Contraseña</label>
-          </div>
-          <div>
-            <input
-              value={form.password}
-              onChange={onInputChanged}
-              name="password"
-              type="password"
-            />
-          </div>
-        </div>
-        <div>
-          <button type="submit" disabled={requestStatus.isLoading}>
-            Enviar
-          </button>
-        </div>
-        <div className={classes.feedback}>
-          {requestStatus.isLoading && (
-            <div className={`${classes.alert} ${classes.alertInfo}`}>Iniciando sesión</div>
-          )}
-          {requestStatus.hasFailed && (
-            <div className={`${classes.alert} ${classes.alertError}`}>
-              Las credenciales no son válidas
-            </div>
-          )}
-          {requestStatus.hasSucceeded && (
-            <div className={`${classes.alert} ${classes.alertSuccess}`}>
-              ¡Bienvenido a Latte and Books!
-            </div>
-          )}
-        </div>
-      </form>
-    </div>
+    <FlexContainer justifyContent="center" minHeight="100vh">
+      <Form onSubmit={onSubmit}>
+        <h3>Iniciar sesión</h3>
+        <FormField
+          inputType="text"
+          name="email"
+          id="email"
+          label="Email"
+          value={form.email}
+          onChangeInput={onInputChanged}
+        />
+        <FormField
+          inputType="password"
+          name="password"
+          id="password"
+          label="Contraseña"
+          value={form.password}
+          onChangeInput={onInputChanged}
+        />
+        <PrimaryButton type="submit" fullWidth disabled={requestStatus.isLoading}>
+          {requestStatus.isLoading ? 'Enviando' : 'Enviar'}
+        </PrimaryButton>
+        {requestStatus.hasFailed && (
+          <Box marginTop={1}>
+            <Error>Las credenciales no son válidas</Error>
+          </Box>
+        )}
+      </Form>
+    </FlexContainer>
   );
 }
