@@ -1,6 +1,7 @@
 import {Navigate, Outlet} from 'react-router-dom';
 import {LOGIN} from 'config/router/paths';
 import {useAuthContext} from 'contexts/authContext';
+import Layout from './Layout';
 
 export default function PrivateRoute() {
   const {isLoggedIn} = useAuthContext();
@@ -10,8 +11,8 @@ export default function PrivateRoute() {
   }
 
   return (
-    <div>
+    <Layout>
       <Outlet />
-    </div>
+    </Layout>
   );
 }
