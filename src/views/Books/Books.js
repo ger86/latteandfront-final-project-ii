@@ -5,12 +5,13 @@ import BooksView from './BooksView';
 
 export default function Books() {
   const {authTokens} = useAuthContext();
-  const [books, setBooks] = useState(null);
+  const [paginatedBooks, setPaginatedBooks] = useState(null);
   const [requestState, setRequestState] = useState({
     isLoading: false,
     isSuccesss: false,
     isError: false
   });
+  const [page, setPage] = useState(1);
 
   useEffect(
     function () {
@@ -21,7 +22,7 @@ export default function Books() {
           isError: false
         });
         try {
-          const json = await apiClient.get('/books', {
+          const json = await apiClient.get(`/books?page=${page}`, {
             Authorization: `Bearer ${authTokens.token}`
           });
           setRequestState({
@@ -29,7 +30,7 @@ export default function Books() {
             isSuccesss: true,
             isError: false
           });
-          setBooks(json.data);
+          setPaginatedBooks(json);
         } catch (error) {
           setRequestState({
             isLoading: false,
@@ -40,8 +41,24 @@ export default function Books() {
       }
       fetchBooks();
     },
-    [authTokens.token]
+    [authTokens.token, page]
   );
 
-  return <BooksView requestState={requestState} books={books} />;
+  function nextPage() {
+    setPage((p) => p + 1);
+  }
+
+  function previousPage() {
+    setPage((p) => p - 1);
+  }
+
+  return (
+    <BooksView
+      requestState={requestState}
+      paginatedBooks={paginatedBooks}
+      onNextPage={nextPage}
+      onPreviousPage={previousPage}
+      page={page}
+    />
+  );
 }
