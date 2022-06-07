@@ -1,4 +1,6 @@
+import {AlertError} from 'components/ui/Alert';
 import FlexContainer from 'components/ui/FlexContainer';
+import Loader from 'components/ui/Loader';
 
 export default function BooksView({
   requestState,
@@ -8,11 +10,15 @@ export default function BooksView({
   page
 }) {
   if (requestState.isLoading) {
-    return <div>Cargando...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (requestState.isError || paginatedBooks === null) {
-    return <div>Se ha producido un error recuperando la lista de libros.</div>;
+    return <AlertError>Se ha producido un error recuperando la lista de libros.</AlertError>;
   }
 
   return (
