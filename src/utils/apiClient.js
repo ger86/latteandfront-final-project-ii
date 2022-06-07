@@ -1,11 +1,12 @@
 const API_URL = 'https://librarify.latteandfront.es/api';
 
 const apiClient = {
-  get: async function (path) {
+  get: async function (path, headers = {}) {
     const response = await fetch(`${API_URL}${path}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...headers
       }
     });
     if (response.ok) {
@@ -16,11 +17,12 @@ const apiClient = {
       throw new Error(JSON.parse(json));
     }
   },
-  post: async function (path, dataObj) {
+  post: async function (path, dataObj, headers = {}) {
     const response = await fetch(`${API_URL}${path}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...headers
       },
       body: JSON.stringify(dataObj)
     });
