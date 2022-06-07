@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useAuthContext} from 'contexts/authContext';
 import apiClient from 'utils/apiClient';
+import BooksView from './BooksView';
 
 export default function Books() {
   const {authTokens} = useAuthContext();
@@ -42,22 +43,5 @@ export default function Books() {
     [authTokens.token]
   );
 
-  if (requestState.isLoading) {
-    return <div>Cargando...</div>;
-  }
-
-  if (requestState.isError || books === null) {
-    return <div>Se ha producido un error recuperando la lista de libros.</div>;
-  }
-
-  return (
-    <div>
-      <h1>Mi biblioteca</h1>
-      <ul>
-        {books.map((book) => (
-          <li key={book.id}>{book.title}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  return <BooksView requestState={requestState} books={books} />;
 }
