@@ -10,11 +10,11 @@ const apiClient = {
       }
     });
     if (response.ok) {
-      const json = response.statusCode === 204 ? null : await response.json();
+      const json = response.status === 204 ? null : await response.json();
       return json;
     } else {
       const json = await response.json();
-      throw new Error(JSON.parse(json));
+      throw new Error(JSON.stringify(json));
     }
   },
   post: async function (path, dataObj, headers = {}) {
@@ -27,11 +27,11 @@ const apiClient = {
       body: JSON.stringify(dataObj)
     });
     if (response.ok) {
-      const json = response.statusCode === 204 ? null : await response.json();
+      const json = response.status === 204 ? null : await response.json();
       return json;
     } else {
       const json = await response.json();
-      throw new Error(JSON.parse(json));
+      throw new Error(JSON.stringify(json));
     }
   }
 };
