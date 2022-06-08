@@ -5,7 +5,7 @@ import apiClient from 'utils/apiClient';
 export default function useFetch(path) {
   const {authTokens} = useAuthContext();
   const [requestState, setRequestState] = useState({
-    isLoading: false,
+    isLoading: true,
     isSuccesss: false,
     isError: false
   });
