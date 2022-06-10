@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useAuthContext} from 'contexts/authContext';
 import apiClient from 'utils/apiClient';
+import blobToBase64 from 'utils/blobToBase64';
 import BookAddView from './BookAddView';
 
 export default function BookAdd() {
@@ -29,13 +30,15 @@ export default function BookAdd() {
       return;
     }
     try {
+      const base64Image = await blobToBase64(image);
       setRequestState({
         isLoading: true,
         isSuccesss: false,
         isError: false
       });
       const data = {
-        title
+        title,
+        base64Image
       };
       await apiClient.post('/books', data, {
         Authorization: `Bearer ${authTokens.token}`
