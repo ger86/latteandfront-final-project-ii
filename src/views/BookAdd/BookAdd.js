@@ -11,6 +11,7 @@ export default function BookAdd() {
     isError: false
   });
   const [title, setTitle] = useState('');
+  const [titleError, setTitleError] = useState(null);
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
@@ -18,6 +19,10 @@ export default function BookAdd() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (title.length < 3) {
+      setTitleError('El título tiene que tener al menos 3 caracteres');
+      return;
+    }
     try {
       setRequestState({
         isLoading: true,
@@ -47,6 +52,7 @@ export default function BookAdd() {
   return (
     <BookAddView
       title={title}
+      titleError={titleError}
       handleTitleChange={handleTitleChange}
       handleSubmit={handleSubmit}
       requestState={requestState}

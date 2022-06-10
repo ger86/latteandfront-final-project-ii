@@ -6,12 +6,19 @@ import FormGroup from 'components/ui/form/FormGroup';
 import FormLabel from 'components/ui/form/FormLabel';
 import Input from 'components/ui/form/Input';
 
-export default function BookFormView({handleSubmit, title, handleTitleChange, requestState}) {
+export default function BookFormView({
+  handleSubmit,
+  title,
+  handleTitleChange,
+  requestState,
+  titleError
+}) {
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
         <FormLabel>Título</FormLabel>
         <Input type="text" value={title} onChange={handleTitleChange} name="title" />
+        {titleError && <Error mt={1}>{titleError}</Error>}
       </FormGroup>
       <PrimaryButton type="submit" disabled={requestState.isSending}>
         {requestState.isSending ? 'Añadiendo...' : 'Añadir libro'}
