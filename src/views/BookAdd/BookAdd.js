@@ -54,7 +54,7 @@ export default function BookAdd() {
     }
   }
 
-  console.log(image);
+  const imageUrl = image === null ? null : URL.createObjectURL(image);
 
   return (
     <BookAddView
@@ -62,6 +62,7 @@ export default function BookAdd() {
       titleError={titleError}
       onTitleChanged={handleTitleChanged}
       onImageSelected={handleImageSelected}
+      imageUrl={imageUrl}
       handleSubmit={handleSubmit}
       requestState={requestState}
     />
