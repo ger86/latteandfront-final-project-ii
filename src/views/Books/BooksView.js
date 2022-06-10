@@ -5,13 +5,15 @@ import BookItem from './components/BookItem';
 import {BooksWrapper} from './components/styledComponents';
 
 export default function BooksView({
-  requestState,
+  booksRequestState,
+  categoriesRequestState,
   paginatedBooks,
+  categories,
   onNextPage,
   onPreviousPage,
   page
 }) {
-  if (requestState.isLoading) {
+  if (booksRequestState.isLoading || categoriesRequestState.isLoading) {
     return (
       <div>
         <Loader />
@@ -19,13 +21,23 @@ export default function BooksView({
     );
   }
 
-  if (requestState.isError || paginatedBooks === null) {
+  if (
+    booksRequestState.isError ||
+    paginatedBooks === null ||
+    categoriesRequestState.isError ||
+    categories === null
+  ) {
     return <AlertError>Se ha producido un error recuperando la lista de libros.</AlertError>;
   }
 
   return (
     <div>
       <h1>Mi biblioteca</h1>
+      <ul>
+        {categories.map((category) => (
+          <li key={category.id}>{category.name}</li>
+        ))}
+      </ul>
       <BooksWrapper>
         {paginatedBooks.data.map((book) => (
           <BookItem key={book.id} book={book} />
