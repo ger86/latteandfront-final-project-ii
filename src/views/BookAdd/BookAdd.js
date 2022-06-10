@@ -12,9 +12,14 @@ export default function BookAdd() {
   });
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(null);
+  const [image, setImage] = useState(null);
 
-  function handleTitleChange(event) {
+  function handleTitleChanged(event) {
     setTitle(event.target.value);
+  }
+
+  function handleImageSelected(event) {
+    setImage(event.target.files[0]);
   }
 
   async function handleSubmit(event) {
@@ -49,11 +54,14 @@ export default function BookAdd() {
     }
   }
 
+  console.log(image);
+
   return (
     <BookAddView
       title={title}
       titleError={titleError}
-      handleTitleChange={handleTitleChange}
+      onTitleChanged={handleTitleChanged}
+      onImageSelected={handleImageSelected}
       handleSubmit={handleSubmit}
       requestState={requestState}
     />

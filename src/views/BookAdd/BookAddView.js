@@ -9,7 +9,8 @@ import Input from 'components/ui/form/Input';
 export default function BookFormView({
   handleSubmit,
   title,
-  handleTitleChange,
+  onTitleChanged,
+  onImageSelected,
   requestState,
   titleError
 }) {
@@ -17,8 +18,12 @@ export default function BookFormView({
     <form onSubmit={handleSubmit}>
       <FormGroup>
         <FormLabel>Título</FormLabel>
-        <Input type="text" value={title} onChange={handleTitleChange} name="title" />
+        <Input type="text" value={title} onChange={onTitleChanged} name="title" />
         {titleError && <Error mt={1}>{titleError}</Error>}
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Imagen</FormLabel>
+        <Input type="file" onChange={onImageSelected} name="image" />
       </FormGroup>
       <PrimaryButton type="submit" disabled={requestState.isSending}>
         {requestState.isSending ? 'Añadiendo...' : 'Añadir libro'}
