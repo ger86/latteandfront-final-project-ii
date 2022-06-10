@@ -1,4 +1,6 @@
 import {AlertError} from 'components/ui/Alert';
+import Box from 'components/ui/Box';
+import {Button} from 'components/ui/Button';
 import FlexContainer from 'components/ui/FlexContainer';
 import Loader from 'components/ui/Loader';
 import BookItem from './components/BookItem';
@@ -36,24 +38,28 @@ export default function BooksView({
   return (
     <div>
       <h1>Mi biblioteca</h1>
-      <FilterSelector
-        elements={categories}
-        onChange={onCategorySelected}
-        value={selectedCategoryId}
-      />
+      <FlexContainer justifyContent="flex-end" marginBottom="1rem">
+        <FilterSelector
+          elements={categories}
+          onChange={onCategorySelected}
+          value={selectedCategoryId}
+        />
+      </FlexContainer>
       <BooksWrapper>
         {paginatedBooks.data.map((book) => (
           <BookItem key={book.id} book={book} />
         ))}
       </BooksWrapper>
       <p>Total: {paginatedBooks.total}</p>
-      <FlexContainer>
-        <button onClick={onPreviousPage} disabled={page === 1}>
+      <FlexContainer marginTop="1rem" justifyContent="flex-end">
+        <Button onClick={onPreviousPage} disabled={page === 1}>
           Anterior
-        </button>
-        <button onClick={onNextPage} disabled={page === paginatedBooks.total}>
-          Siguiente
-        </button>
+        </Button>
+        <Box marginLeft="1">
+          <Button onClick={onNextPage} disabled={page === paginatedBooks.total}>
+            Siguiente
+          </Button>
+        </Box>
       </FlexContainer>
     </div>
   );

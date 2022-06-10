@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Button = styled.button`
+export const Button = styled.button`
   display: inline-block;
   width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
   padding: 0.5rem 1rem;

@@ -6,6 +6,7 @@ export default styled.div`
   justify-content: ${(props) => props.justifyContent ?? 'flex-start'};
   min-height: ${(props) => props.minHeight ?? 'auto'};
   margin-top: ${(props) => props.marginTop ?? '0'};
+  margin-bottom: ${(props) => props.marginBottom ?? '0'};
   & > * {
     margin-right: ${(props) => (props.withGutter ? '1rem' : '0')};
   }
