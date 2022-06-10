@@ -56,7 +56,10 @@ export default function BooksView({
           Anterior
         </Button>
         <Box marginLeft="1">
-          <Button onClick={onNextPage} disabled={page === paginatedBooks.total}>
+          <Button
+            onClick={onNextPage}
+            disabled={page === Math.ceil(paginatedBooks.total / paginatedBooks.itemsPerPage)}
+          >
             Siguiente
           </Button>
         </Box>
