@@ -2,6 +2,7 @@ import {AlertError} from 'components/ui/Alert';
 import FlexContainer from 'components/ui/FlexContainer';
 import Loader from 'components/ui/Loader';
 import BookItem from './components/BookItem';
+import FilterSelector from './components/FilterSelector';
 import {BooksWrapper} from './components/styledComponents';
 
 export default function BooksView({
@@ -11,7 +12,9 @@ export default function BooksView({
   categories,
   onNextPage,
   onPreviousPage,
-  page
+  page,
+  onCategorySelected,
+  selectedCategoryId
 }) {
   if (booksRequestState.isLoading || categoriesRequestState.isLoading) {
     return (
@@ -33,11 +36,11 @@ export default function BooksView({
   return (
     <div>
       <h1>Mi biblioteca</h1>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.id}>{category.name}</li>
-        ))}
-      </ul>
+      <FilterSelector
+        elements={categories}
+        onChange={onCategorySelected}
+        value={selectedCategoryId}
+      />
       <BooksWrapper>
         {paginatedBooks.data.map((book) => (
           <BookItem key={book.id} book={book} />
