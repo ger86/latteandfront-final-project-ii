@@ -30,9 +30,6 @@ export default function Books() {
       } else {
         return {
           data: paginatedBooks.data.filter(function (book) {
-            if (selectedCategoryId === '') {
-              return true;
-            }
             return book.categories.some((cat) => cat.id === selectedCategoryId);
           }),
           total: paginatedBooks.total,
