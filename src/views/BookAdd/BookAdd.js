@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useAuthContext} from 'contexts/authContext';
+import useCategories from 'hooks/useCategories';
 import apiClient from 'utils/apiClient';
 import blobToBase64 from 'utils/blobToBase64';
 import BookAddView from './BookAddView';
@@ -14,9 +15,20 @@ export default function BookAdd() {
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(null);
   const [image, setImage] = useState(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [categoriesRequestState, categories] = useCategories();
 
   function handleTitleChanged(event) {
     setTitle(event.target.value);
+  }
+
+  function handleCategoryNameChanged(event) {
+    setCategoryName(event.target.value);
+  }
+
+  function handleCategorySelected(event) {
+    setSelectedCategoryId(event.target.value);
   }
 
   function handleImageSelected(event) {
@@ -36,9 +48,21 @@ export default function BookAdd() {
         isSuccesss: false,
         isError: false
       });
+      let categories = [];
+      if (selectedCategoryId !== '') {
+        categories.push({
+          id: selectedCategoryId
+        });
+      }
+      if (categoryName !== '') {
+        categories.push({
+          name: categoryName
+        });
+      }
       const data = {
         title,
-        base64Image
+        base64Image,
+        categories
       };
       await apiClient.post('/books', data, {
         Authorization: `Bearer ${authTokens.token}`
@@ -68,6 +92,12 @@ export default function BookAdd() {
       imageUrl={imageUrl}
       handleSubmit={handleSubmit}
       requestState={requestState}
+      categories={categories}
+      categoriesRequestState={categoriesRequestState}
+      selectedCategoryId={selectedCategoryId}
+      onCategorySelected={handleCategorySelected}
+      onCategoryNameChanged={handleCategoryNameChanged}
+      categoryName={categoryName}
     />
   );
 }

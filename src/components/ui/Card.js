@@ -30,7 +30,7 @@ const Title = styled.h3`
   }
 `;
 
-function Card({image = null, title, description = null, footer: Footer}) {
+function Card({image = null, title, description = null, footer = null}) {
   return (
     <CardWrapper>
       <CardInner>
@@ -42,7 +42,7 @@ function Card({image = null, title, description = null, footer: Footer}) {
         <div>
           <Title>{title}</Title>
           {description && <div>{description}</div>}
-          {Footer && <Footer />}
+          {footer}
         </div>
       </CardInner>
     </CardWrapper>

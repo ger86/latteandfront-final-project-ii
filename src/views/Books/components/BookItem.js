@@ -7,8 +7,15 @@ function BookItem({book}) {
   return (
     <Card
       title={<Link to={generatePath(BOOK_DETAIL, {id: book.id})}>{book.title}</Link>}
-      image={book.image}
+      image={book.image ?? 'https://placedog.net/500'}
       description={book.description}
+      footer={
+        <ul>
+          {book.categories.map((category) => (
+            <li key={category.id}>{category.name}</li>
+          ))}
+        </ul>
+      }
     />
   );
 }

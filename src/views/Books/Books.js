@@ -1,4 +1,5 @@
 import {useMemo, useState} from 'react';
+import useCategories from 'hooks/useCategories';
 import useFetch from 'hooks/useFetch';
 import BooksView from './BooksView';
 
@@ -6,7 +7,7 @@ export default function Books() {
   const [page, setPage] = useState(1);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [booksRequestState, paginatedBooks] = useFetch(`/books?page=${page}`);
-  const [categoriesRequestState, categories] = useFetch(`/categories`);
+  const [categoriesRequestState, categories] = useCategories();
 
   function nextPage() {
     setPage((p) => p + 1);
