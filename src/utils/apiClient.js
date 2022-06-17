@@ -33,6 +33,22 @@ const apiClient = {
       const json = await response.json();
       throw new Error(JSON.stringify(json));
     }
+  },
+  delete: async function (path, headers = {}) {
+    const response = await fetch(`${API_URL}${path}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers
+      }
+    });
+    if (response.ok) {
+      const json = response.status === 204 ? null : await response.json();
+      return json;
+    } else {
+      const json = await response.json();
+      throw new Error(JSON.stringify(json));
+    }
   }
 };
 

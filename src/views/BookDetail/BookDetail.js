@@ -1,10 +1,10 @@
 import {useParams} from 'react-router-dom';
-import useFetch from 'hooks/useFetch';
+import useBook from 'hooks/useBook';
 import BookDetailView from './BookDetailView';
 
 export default function BookDetail() {
   const {id} = useParams();
-  const [requestState, book] = useFetch(`/books/${id}`);
+  const [requestState, book] = useBook(id);
 
   return <BookDetailView book={book} requestState={requestState} />;
 }
