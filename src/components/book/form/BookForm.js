@@ -2,11 +2,11 @@ import {useState} from 'react';
 import useCategories from 'hooks/useCategories';
 import BookFormView from './BookFormView';
 
-export default function BookForm({requestState, onSubmit}) {
-  const [title, setTitle] = useState('');
+export default function BookForm({requestState, onSubmit, book}) {
+  const [title, setTitle] = useState(book?.title ?? '');
   const [titleError, setTitleError] = useState(null);
   const [image, setImage] = useState(null);
-  const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState(book?.categories[0]?.id ?? '');
   const [categoryName, setCategoryName] = useState('');
   const [categoriesRequestState, categories] = useCategories();
 
@@ -40,7 +40,12 @@ export default function BookForm({requestState, onSubmit}) {
     });
   }
 
-  const imageUrl = image === null ? null : URL.createObjectURL(image);
+  let imageUrl = null;
+  if (image !== null) {
+    imageUrl = URL.createObjectURL(image);
+  } else {
+    imageUrl = book.image;
+  }
 
   return (
     <BookFormView
@@ -57,6 +62,7 @@ export default function BookForm({requestState, onSubmit}) {
       onCategorySelected={handleCategorySelected}
       onCategoryNameChanged={handleCategoryNameChanged}
       categoryName={categoryName}
+      isEditing={Boolean(book)}
     />
   );
 }

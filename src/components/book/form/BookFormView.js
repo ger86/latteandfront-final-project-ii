@@ -22,7 +22,8 @@ export default function BookFormView({
   selectedCategoryId,
   onCategorySelected,
   categoryName,
-  onCategoryNameChanged
+  onCategoryNameChanged,
+  isEditing
 }) {
   if (categoriesRequestState.isLoading) {
     return (
@@ -78,7 +79,13 @@ export default function BookFormView({
         </ImageFieldWrapper>
       </ImageFormGroup>
       <PrimaryButton type="submit" disabled={requestState.isSending}>
-        {requestState.isSending ? 'Añadiendo...' : 'Añadir libro'}
+        {requestState.isSending
+          ? isEditing
+            ? 'Editando...'
+            : 'Añadiendo'
+          : isEditing
+          ? 'Editar libro'
+          : 'Añadir libro'}
       </PrimaryButton>
       {requestState.isError && (
         <Box marginTop={1}>

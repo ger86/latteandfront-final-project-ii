@@ -10,6 +10,7 @@ export const Button = styled.button`
   border-radius: 0.25rem;
   background-color: ${(props) => props.theme.colors.gray[200]};
   cursor: pointer;
+  color: ${(props) => props.theme.colors.gray[800]};
   font-family: ${(props) => props.theme.fontFamily.primary};
   font-size: ${(props) => props.theme.fontSize.body};
   transition: background-color 0.2s linear, color 0.2s linear;
