@@ -7,7 +7,7 @@ import Error from 'components/ui/form/Error';
 import FormGroup from 'components/ui/form/FormGroup';
 import FormLabel from 'components/ui/form/FormLabel';
 import Input from 'components/ui/form/Input';
-import {ImageFieldWrapper, ImageFormGroup, ImageWrapper} from './components/styledComponents';
+import {ImageFieldWrapper, ImageFormGroup, ImageWrapper} from './styledComponents';
 
 export default function BookFormView({
   handleSubmit,
