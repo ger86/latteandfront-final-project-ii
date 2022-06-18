@@ -6,7 +6,7 @@ export default function BookForm({requestState, onSubmit, book = null}) {
   const [form, setForm] = useState({
     title: book?.title ?? '',
     image: null,
-    selectedCategoryId: book?.categories[0]?.id ?? '',
+    categoriesIds: book === null ? [] : book.categories.map((category) => category.id),
     categoryName: '',
     description: book?.description ?? '',
     score: book?.score ?? '',
@@ -20,6 +20,13 @@ export default function BookForm({requestState, onSubmit, book = null}) {
     setForm((currentForm) => ({
       ...currentForm,
       [event.target.name]: event.target.value
+    }));
+  }
+
+  function handleCategoriesSelectChanged(event) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      categoriesIds: [...event.target.selectedOptions].map((option) => option.value)
     }));
   }
 
@@ -63,6 +70,7 @@ export default function BookForm({requestState, onSubmit, book = null}) {
       scoreError={scoreError}
       onInputChanged={handleInputChanged}
       onScoreChanged={handleScoreChanged}
+      onCategoriesSelectChanged={handleCategoriesSelectChanged}
       onImageSelected={handleImageSelected}
       imageUrl={imageUrl}
       handleSubmit={handleSubmit}

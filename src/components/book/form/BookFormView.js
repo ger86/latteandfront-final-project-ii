@@ -7,6 +7,7 @@ import Error from 'components/ui/form/Error';
 import FormGroup from 'components/ui/form/FormGroup';
 import FormLabel from 'components/ui/form/FormLabel';
 import Input from 'components/ui/form/Input';
+import Select from 'components/ui/form/Select';
 import StarsInput from 'components/ui/form/StarsInput';
 import TextArea from 'components/ui/form/TextArea';
 import {ImageFieldWrapper, ImageFormGroup, ImageWrapper} from './styledComponents';
@@ -16,6 +17,7 @@ export default function BookFormView({
   form,
   onScoreChanged,
   onInputChanged,
+  onCategoriesSelectChanged,
   imageUrl,
   onImageSelected,
   requestState,
@@ -37,6 +39,8 @@ export default function BookFormView({
     return <AlertError>Se ha producido un error recuperando la lista de libros.</AlertError>;
   }
 
+  console.log(form.categoriesIds);
+
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
@@ -51,25 +55,28 @@ export default function BookFormView({
       </FormGroup>
       <FormGroup>
         <FormLabel>Categoría</FormLabel>
-        <select
-          name="selectedCategoryId"
-          value={form.selectedCategoryId}
-          onChange={onInputChanged}
-          disabled={form.categoryName.length > 0}
-        >
-          <option value="">-</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+        <Box marginBottom="1">
+          <Select
+            name="categoriesIds"
+            value={form.categoriesIds}
+            onChange={onCategoriesSelectChanged}
+            multiple
+            width="100%"
+          >
+            <option value="">-</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </Select>
+        </Box>
+        <FormLabel>Nueva categoría</FormLabel>
         <Input
           type="text"
           value={form.categoryName}
           onChange={onInputChanged}
           name="categoryName"
-          disabled={form.selectedCategoryId.length > 0}
         />
       </FormGroup>
       <ImageFormGroup>

@@ -26,12 +26,9 @@ export default function BookEdit() {
         isSuccesss: false,
         isError: false
       });
-      let categories = [];
-      if (values.selectedCategoryId !== '') {
-        categories.push({
-          id: values.selectedCategoryId
-        });
-      }
+      let categories = values.categoriesIds.map((categoryId) => ({
+        id: categoryId
+      }));
       if (values.categoryName !== '') {
         categories.push({
           name: values.categoryName
