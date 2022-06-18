@@ -7,6 +7,7 @@ import Error from 'components/ui/form/Error';
 import FormGroup from 'components/ui/form/FormGroup';
 import FormLabel from 'components/ui/form/FormLabel';
 import Input from 'components/ui/form/Input';
+import TextArea from 'components/ui/form/TextArea';
 import {ImageFieldWrapper, ImageFormGroup, ImageWrapper} from './styledComponents';
 
 export default function BookFormView({
@@ -17,6 +18,7 @@ export default function BookFormView({
   onImageSelected,
   requestState,
   titleError,
+  scoreError,
   categories,
   categoriesRequestState,
   isEditing
@@ -38,6 +40,11 @@ export default function BookFormView({
       <FormGroup>
         <FormLabel>Título</FormLabel>
         <Input type="text" value={form.title} onChange={onInputChanged} name="title" />
+        {titleError && <Error mt={1}>{titleError}</Error>}
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Descripción</FormLabel>
+        <TextArea value={form.description} onChange={onInputChanged} name="description" rows={6} />
         {titleError && <Error mt={1}>{titleError}</Error>}
       </FormGroup>
       <FormGroup>
@@ -75,6 +82,15 @@ export default function BookFormView({
           <Input type="file" onChange={onImageSelected} name="image" />
         </ImageFieldWrapper>
       </ImageFormGroup>
+      <FormGroup>
+        <FormLabel>Puntuación</FormLabel>
+        <Input type="number" value={form.score} onChange={onInputChanged} name="score" />
+        {scoreError && <Error mt={1}>{scoreError}</Error>}
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Fecha de lectura</FormLabel>
+        <Input type="date" value={form.readAt} onChange={onInputChanged} name="readAt" />
+      </FormGroup>
       <PrimaryButton type="submit" disabled={requestState.isSending}>
         {requestState.isSending
           ? isEditing

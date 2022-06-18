@@ -39,6 +39,9 @@ export default function BookEdit() {
       }
       const data = {
         title: values.title,
+        description: values.description,
+        readAt: values.readAt,
+        score: values.score,
         base64Image,
         categories
       };

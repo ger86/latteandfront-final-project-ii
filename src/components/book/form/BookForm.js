@@ -7,9 +7,13 @@ export default function BookForm({requestState, onSubmit, book = null}) {
     title: book?.title ?? '',
     image: null,
     selectedCategoryId: book?.categories[0]?.id ?? '',
-    categoryName: ''
+    categoryName: '',
+    description: book?.description ?? '',
+    score: book?.score ?? '',
+    readAt: book?.readAt ?? ''
   });
   const [titleError, setTitleError] = useState(null);
+  const [scoreError, setScoreError] = useState(null);
   const [categoriesRequestState, categories] = useCategories();
 
   function handleInputChanged(event) {
@@ -32,6 +36,10 @@ export default function BookForm({requestState, onSubmit, book = null}) {
       setTitleError('El título tiene que tener al menos 3 caracteres');
       return;
     }
+    if (form.score !== '' && (form.score < 1 || form.score > 5)) {
+      setScoreError('La puntuación tiene que ser un valor entre 1 y 5');
+      return;
+    }
     onSubmit(form);
   }
 
@@ -45,6 +53,7 @@ export default function BookForm({requestState, onSubmit, book = null}) {
   return (
     <BookFormView
       titleError={titleError}
+      scoreError={scoreError}
       onInputChanged={handleInputChanged}
       onImageSelected={handleImageSelected}
       imageUrl={imageUrl}
