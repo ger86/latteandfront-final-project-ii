@@ -11,18 +11,14 @@ import {ImageFieldWrapper, ImageFormGroup, ImageWrapper} from './styledComponent
 
 export default function BookFormView({
   handleSubmit,
-  title,
-  onTitleChanged,
+  form,
+  onInputChanged,
   imageUrl,
   onImageSelected,
   requestState,
   titleError,
   categories,
   categoriesRequestState,
-  selectedCategoryId,
-  onCategorySelected,
-  categoryName,
-  onCategoryNameChanged,
   isEditing
 }) {
   if (categoriesRequestState.isLoading) {
@@ -41,15 +37,16 @@ export default function BookFormView({
     <form onSubmit={handleSubmit}>
       <FormGroup>
         <FormLabel>Título</FormLabel>
-        <Input type="text" value={title} onChange={onTitleChanged} name="title" />
+        <Input type="text" value={form.title} onChange={onInputChanged} name="title" />
         {titleError && <Error mt={1}>{titleError}</Error>}
       </FormGroup>
       <FormGroup>
         <FormLabel>Categoría</FormLabel>
         <select
-          value={selectedCategoryId}
-          onChange={onCategorySelected}
-          disabled={categoryName.length > 0}
+          name="selectedCategoryId"
+          value={form.selectedCategoryId}
+          onChange={onInputChanged}
+          disabled={form.categoryName.length > 0}
         >
           <option value="">-</option>
           {categories.map((category) => (
@@ -60,10 +57,10 @@ export default function BookFormView({
         </select>
         <Input
           type="text"
-          value={categoryName}
-          onChange={onCategoryNameChanged}
+          value={form.categoryName}
+          onChange={onInputChanged}
           name="categoryName"
-          disabled={selectedCategoryId.length > 0}
+          disabled={form.selectedCategoryId.length > 0}
         />
       </FormGroup>
       <ImageFormGroup>

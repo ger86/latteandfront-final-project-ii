@@ -2,66 +2,57 @@ import {useState} from 'react';
 import useCategories from 'hooks/useCategories';
 import BookFormView from './BookFormView';
 
-export default function BookForm({requestState, onSubmit, book}) {
-  const [title, setTitle] = useState(book?.title ?? '');
+export default function BookForm({requestState, onSubmit, book = null}) {
+  const [form, setForm] = useState({
+    title: book?.title ?? '',
+    image: null,
+    selectedCategoryId: book?.categories[0]?.id ?? '',
+    categoryName: ''
+  });
   const [titleError, setTitleError] = useState(null);
-  const [image, setImage] = useState(null);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(book?.categories[0]?.id ?? '');
-  const [categoryName, setCategoryName] = useState('');
   const [categoriesRequestState, categories] = useCategories();
 
-  function handleTitleChanged(event) {
-    setTitle(event.target.value);
-  }
-
-  function handleCategoryNameChanged(event) {
-    setCategoryName(event.target.value);
-  }
-
-  function handleCategorySelected(event) {
-    setSelectedCategoryId(event.target.value);
+  function handleInputChanged(event) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      [event.target.name]: event.target.value
+    }));
   }
 
   function handleImageSelected(event) {
-    setImage(event.target.files[0]);
+    setForm((currentForm) => ({
+      ...currentForm,
+      image: event.target.files[0]
+    }));
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (title.length < 3) {
+    if (form.title.length < 3) {
       setTitleError('El título tiene que tener al menos 3 caracteres');
       return;
     }
-    onSubmit({
-      title,
-      image,
-      selectedCategoryId,
-      categoryName
-    });
+    onSubmit(form);
   }
 
   let imageUrl = null;
-  if (image !== null) {
-    imageUrl = URL.createObjectURL(image);
-  } else {
+  if (form.image !== null) {
+    imageUrl = URL.createObjectURL(form.image);
+  } else if (book !== null) {
     imageUrl = book.image;
   }
 
   return (
     <BookFormView
-      title={title}
       titleError={titleError}
-      onTitleChanged={handleTitleChanged}
+      onInputChanged={handleInputChanged}
       onImageSelected={handleImageSelected}
       imageUrl={imageUrl}
       handleSubmit={handleSubmit}
       requestState={requestState}
       categories={categories}
       categoriesRequestState={categoriesRequestState}
-      selectedCategoryId={selectedCategoryId}
-      onCategorySelected={handleCategorySelected}
-      onCategoryNameChanged={handleCategoryNameChanged}
-      categoryName={categoryName}
+      form={form}
       isEditing={Boolean(book)}
     />
   );
