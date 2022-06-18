@@ -23,6 +23,13 @@ export default function BookForm({requestState, onSubmit, book = null}) {
     }));
   }
 
+  function handleScoreChanged(value) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      score: value
+    }));
+  }
+
   function handleImageSelected(event) {
     setForm((currentForm) => ({
       ...currentForm,
@@ -55,6 +62,7 @@ export default function BookForm({requestState, onSubmit, book = null}) {
       titleError={titleError}
       scoreError={scoreError}
       onInputChanged={handleInputChanged}
+      onScoreChanged={handleScoreChanged}
       onImageSelected={handleImageSelected}
       imageUrl={imageUrl}
       handleSubmit={handleSubmit}

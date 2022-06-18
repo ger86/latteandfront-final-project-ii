@@ -7,12 +7,14 @@ import Error from 'components/ui/form/Error';
 import FormGroup from 'components/ui/form/FormGroup';
 import FormLabel from 'components/ui/form/FormLabel';
 import Input from 'components/ui/form/Input';
+import StarsInput from 'components/ui/form/StarsInput';
 import TextArea from 'components/ui/form/TextArea';
 import {ImageFieldWrapper, ImageFormGroup, ImageWrapper} from './styledComponents';
 
 export default function BookFormView({
   handleSubmit,
   form,
+  onScoreChanged,
   onInputChanged,
   imageUrl,
   onImageSelected,
@@ -84,7 +86,7 @@ export default function BookFormView({
       </ImageFormGroup>
       <FormGroup>
         <FormLabel>Puntuación</FormLabel>
-        <Input type="number" value={form.score} onChange={onInputChanged} name="score" />
+        <StarsInput value={form.score} onChange={onScoreChanged} />
         {scoreError && <Error mt={1}>{scoreError}</Error>}
       </FormGroup>
       <FormGroup>

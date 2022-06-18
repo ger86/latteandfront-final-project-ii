@@ -5,6 +5,7 @@ import {Button, DangerButton} from 'components/ui/Button';
 import Card from 'components/ui/Card';
 import FlexContainer from 'components/ui/FlexContainer';
 import Loader from 'components/ui/Loader';
+import Stars from 'components/ui/Stars';
 import {BOOK_DELETE, BOOK_EDIT} from 'config/router/paths';
 
 export default function BookDetailView({book, requestState}) {
@@ -44,7 +45,7 @@ export default function BookDetailView({book, requestState}) {
           )}
           {book.score && (
             <Box marginBottom="1">
-              <strong>Puntuación: </strong>: {book.score}
+              <Stars stars={book.score} />
             </Box>
           )}
           <FlexContainer withGutter>
