@@ -11,7 +11,7 @@ const CardInner = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
   }
 `;
 
