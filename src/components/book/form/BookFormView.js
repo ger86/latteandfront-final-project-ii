@@ -39,8 +39,6 @@ export default function BookFormView({
     return <AlertError>Se ha producido un error recuperando la lista de libros.</AlertError>;
   }
 
-  console.log(form.categoriesIds);
-
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
