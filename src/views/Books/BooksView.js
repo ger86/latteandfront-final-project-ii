@@ -3,6 +3,7 @@ import Box from 'components/ui/Box';
 import {Button} from 'components/ui/Button';
 import FlexContainer from 'components/ui/FlexContainer';
 import Loader from 'components/ui/Loader';
+import Input from 'components/ui/form/Input';
 import BookItem from './components/BookItem';
 import FilterSelector from './components/FilterSelector';
 import {BooksWrapper} from './components/styledComponents';
@@ -16,7 +17,9 @@ export default function BooksView({
   onPreviousPage,
   page,
   onCategorySelected,
-  selectedCategoryId
+  selectedCategoryId,
+  searchText,
+  onSearchTextChanged
 }) {
   if (booksRequestState.isLoading || categoriesRequestState.isLoading) {
     return (
@@ -38,7 +41,10 @@ export default function BooksView({
   return (
     <div>
       <h1>Mi biblioteca</h1>
-      <FlexContainer justifyContent="flex-end" marginBottom="1rem">
+      <FlexContainer justifyContent="flex-end" marginBottom="1rem" withGutter>
+        <div>
+          <Input onChange={onSearchTextChanged} placeholder="Buscar..." defaultValue={searchText} />
+        </div>
         <FilterSelector
           elements={categories}
           onChange={onCategorySelected}
