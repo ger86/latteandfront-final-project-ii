@@ -15,6 +15,9 @@ export default function Books() {
   if (searchText.length > 0) {
     urlSearchParams.append('searchText', searchText);
   }
+  if (selectedCategoryId.length > 0) {
+    urlSearchParams.append('categoryId', selectedCategoryId);
+  }
 
   const [booksRequestState, paginatedBooks] = useFetch(`/books?${urlSearchParams.toString()}`);
   const [categoriesRequestState, categories] = useCategories();
@@ -40,33 +43,12 @@ export default function Books() {
     setSelectedCategoryId(event.target.value);
   }
 
-  const booksToShow = useMemo(
-    function () {
-      if (paginatedBooks === null) {
-        return null;
-      }
-      if (selectedCategoryId === '') {
-        return paginatedBooks;
-      } else {
-        return {
-          data: paginatedBooks.data.filter(function (book) {
-            return book.categories.some((cat) => cat.id === selectedCategoryId);
-          }),
-          total: paginatedBooks.total,
-          itemsPerPage: paginatedBooks.itemsPerPage,
-          page: paginatedBooks.page
-        };
-      }
-    },
-    [paginatedBooks, selectedCategoryId]
-  );
-
   return (
     <div>
       <BooksView
         booksRequestState={booksRequestState}
         categoriesRequestState={categoriesRequestState}
-        paginatedBooks={booksToShow}
+        paginatedBooks={paginatedBooks}
         categories={categories}
         onNextPage={nextPage}
         onPreviousPage={previousPage}
